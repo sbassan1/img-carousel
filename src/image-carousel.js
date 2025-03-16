@@ -1,110 +1,105 @@
-
-
-/*
-const imageList = [
-  "./src/images/image1.jpg",
-  "./src/images/image2.jpg",
-  "./src/images/image3.jpg",
-];
-*/
-
 export class ImageCarousel {
-    constructor(imageList) {
-        this.imageList = imageList; // Array of image sources
-        this.elements = {}; // Store references to DOM elements
-        this.currentIndex = 0; // Track active image
-    }
+  constructor(imageList) {
+    this.imageList = imageList;
+    this.elements = {};
+    this.currentIndex = 0;
+  }
 
-    render() {
-        const frameDiv = document.createElement('div');
-        frameDiv.className = "img-carousel-frame";
+  render() {
+    const frameDiv = document.createElement("div");
+    frameDiv.className = "img-carousel-frame";
 
-        const slides = document.createElement('div'); // Contains images
-        slides.className = "img-carousel-slides";
+    const slides = document.createElement("div");
+    slides.className = "img-carousel-slides";
 
-        const controls = document.createElement('div');
-        controls.className = "img-carousel-controls";
+    const controls = document.createElement("div");
+    controls.className = "img-carousel-controls";
 
-        const imagePickers = document.createElement('div');
-        imagePickers.className = "img-carousel-pickers";
+    const imagePickers = document.createElement("div");
+    imagePickers.className = "img-carousel-pickers";
 
-        const prevBtn = document.createElement('button');
-        prevBtn.className = "img-carousel-prev";
-        prevBtn.textContent = "←"; 
+    const prevBtn = document.createElement("button");
+    prevBtn.className = "img-carousel-prev";
+    prevBtn.textContent = "←";
 
-        const nextBtn = document.createElement('button');
-        nextBtn.className = "img-carousel-next";
-        nextBtn.textContent = "→";
+    const nextBtn = document.createElement("button");
+    nextBtn.className = "img-carousel-next";
+    nextBtn.textContent = "→";
 
-        this.imageList.forEach((imageSrc, index) => {
-            const imageSlide = document.createElement('img');
-            imageSlide.className = "img-carousel-image";
-            imageSlide.src = imageSrc;
-            if (index !== 0) {
-                imageSlide.style.display = "none"; // Hide all but the first image
-            }
-            slides.append(imageSlide);
+    this.imageList.forEach((imageSrc, index) => {
+      const imageSlide = document.createElement("img");
+      imageSlide.className = "img-carousel-image";
+      imageSlide.src = imageSrc;
+      if (index !== 0) {
+        imageSlide.style.display = "none"; // The first image should render at least!
+      }
+      slides.append(imageSlide);
 
-            const imgBtn = document.createElement('button');
-            imgBtn.textContent = '';
-            imgBtn.className = "img-carousel-btn-picker";
-            imgBtn.dataset.index = index; 
-            imagePickers.append(imgBtn);
-        });
+      const imgBtn = document.createElement("button");
+      imgBtn.textContent = "";
+      imgBtn.className = "img-carousel-btn-picker";
+      imgBtn.dataset.index = index;
+      imagePickers.append(imgBtn);
+    });
 
-        controls.append(prevBtn, nextBtn, imagePickers);
-        frameDiv.append(slides, controls);
+    controls.append(prevBtn, nextBtn, imagePickers);
+    frameDiv.append(slides, controls);
 
-        this.elements = {
-            frameDiv,
-            slides,
-            prevBtn,
-            nextBtn,
-            imagePickers
-        };
+    this.elements = {
+      frameDiv,
+      slides,
+      prevBtn,
+      nextBtn,
+      imagePickers,
+    };
 
-        this.elements.images = slides.querySelectorAll(".img-carousel-image");
-        this.elements.buttons = imagePickers.querySelectorAll(".img-carousel-btn-picker");
+    this.elements.images = slides.querySelectorAll(".img-carousel-image");
+    this.elements.buttons = imagePickers.querySelectorAll(
+      ".img-carousel-btn-picker",
+    );
 
-        this.eventHandlers();
+    this.eventHandlers();
 
-        return frameDiv;
-    }
+    return frameDiv;
+  }
 
-    eventHandlers() { // render must be called before eventHandlers
-        const { prevBtn, nextBtn, buttons } = this.elements;
+  eventHandlers() {
+    // render must be called before eventHandlers
 
-        prevBtn.addEventListener("click", () => this.prevImage());
-        nextBtn.addEventListener("click", () => this.nextImage());
+    const { prevBtn, nextBtn, buttons } = this.elements;
 
-        buttons.forEach(imgBtnSelector => { 
-            imgBtnSelector.addEventListener("click", (event) => {
-                this.showImage(parseInt(event.target.dataset.index));
-            });
-        });
-    }
+    prevBtn.addEventListener("click", () => this.prevImage());
+    nextBtn.addEventListener("click", () => this.nextImage());
 
-    showImage(imageIndex) {
-        this.currentIndex = imageIndex;
-        this.updateCarousel();
-    }
+    buttons.forEach((imgBtnSelector) => {
+      imgBtnSelector.addEventListener("click", (event) => {
+        this.showImage(parseInt(event.target.dataset.index));
+      });
+    });
+  }
 
-    nextImage() {
-        this.currentIndex = (this.currentIndex + 1) % this.imageList.length;
-        console.log("NEXT IMG");
-        this.updateCarousel();
-    }
+  showImage(imageIndex) {
+    this.currentIndex = imageIndex;
+    this.updateCarousel();
+  }
 
-    prevImage() {
-        this.currentIndex = (this.currentIndex - 1 + this.imageList.length) % this.imageList.length;
-        console.log("PREV IMG");
-        this.updateCarousel();
-    }
+  nextImage() {
+    this.currentIndex = (this.currentIndex + 1) % this.imageList.length;
+    console.log("NEXT IMG");
+    this.updateCarousel();
+  }
 
-    updateCarousel() {
-        this.elements.images.forEach((img, idx) => {
-            console.log(idx);
-            img.style.display = (idx === this.currentIndex) ? "block" : "none";
-        });
-    }
+  prevImage() {
+    this.currentIndex =
+      (this.currentIndex - 1 + this.imageList.length) % this.imageList.length;
+    console.log("PREV IMG");
+    this.updateCarousel();
+  }
+
+  updateCarousel() {
+    this.elements.images.forEach((img, idx) => {
+      console.log(idx);
+      img.style.display = idx === this.currentIndex ? "block" : "none";
+    });
+  }
 }
