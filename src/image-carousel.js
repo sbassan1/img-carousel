@@ -13,8 +13,6 @@ export class ImageCarousel {
         this.imageList = imageList; // Array of image sources
         this.elements = {}; // Store references to DOM elements
         this.currentIndex = 0; // Track active image
-
-        this.eventHandlers();
     }
 
     render() {
@@ -62,12 +60,51 @@ export class ImageCarousel {
             slides,
             prevBtn,
             nextBtn,
-            imagePickers,
-            images: slides.querySelectorAll(".img-carousel-image"),
-            buttons: imagePickers.querySelectorAll(".img-carousel-btn-picker"),
+            imagePickers
         };
+
+        this.elements.images = slides.querySelectorAll(".img-carousel-image");
+        this.elements.buttons = imagePickers.querySelectorAll(".img-carousel-btn-picker");
+
+        this.eventHandlers();
 
         return frameDiv;
     }
 
+    eventHandlers() { // render must be called before eventHandlers
+        const { prevBtn, nextBtn, buttons } = this.elements;
+
+        prevBtn.addEventListener("click", () => this.prevImage());
+        nextBtn.addEventListener("click", () => this.nextImage());
+
+        buttons.forEach(imgBtnSelector => { 
+            imgBtnSelector.addEventListener("click", (event) => {
+                this.showImage(parseInt(event.target.dataset.index));
+            });
+        });
+    }
+
+    showImage(imageIndex) {
+        this.currentIndex = imageIndex;
+        this.updateCarousel();
+    }
+
+    nextImage() {
+        this.currentIndex = (this.currentIndex + 1) % this.imageList.length;
+        console.log("NEXT IMG");
+        this.updateCarousel();
+    }
+
+    prevImage() {
+        this.currentIndex = (this.currentIndex - 1 + this.imageList.length) % this.imageList.length;
+        console.log("PREV IMG");
+        this.updateCarousel();
+    }
+
+    updateCarousel() {
+        this.elements.images.forEach((img, idx) => {
+            console.log(idx);
+            img.style.display = (idx === this.currentIndex) ? "block" : "none";
+        });
+    }
 }

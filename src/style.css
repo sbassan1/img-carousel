@@ -1,0 +1,82 @@
+
+
+.img-carousel-frame {
+    width: 100%;
+    max-width: 700px;
+    height: 500px;
+    background: black;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-carousel-slides {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.img-carousel-prev, 
+.img-carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.img-carousel-prev:hover, 
+.img-carousel-next:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.img-carousel-prev {
+    left: 10px;
+}
+
+.img-carousel-next {
+    right: 10px;
+}
+
+.img-carousel-pickers {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+}
+
+.img-carousel-btn-picker {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.img-carousel-btn-picker:hover, 
+.img-carousel-btn-picker.active {
+    background-color: gray; 
+}
