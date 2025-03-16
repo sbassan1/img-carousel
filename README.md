@@ -3,7 +3,7 @@
 
 A small simple image-carousel HTML element JS package for personal use. Feel free to use it though! 🎉
 
-Link to the package: 
+Link to the package: https://www.npmjs.com/package/sbassan1-img-carousel
 
 My another npm package (a simple dropdown menu!): https://www.npmjs.com/package/sbassan1-dropdown-menu
 
